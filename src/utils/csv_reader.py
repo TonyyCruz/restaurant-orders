@@ -8,6 +8,6 @@ def csv_reader(path):
     try:
         with open(path, "r") as file:
             csvreader = csv.reader(file)
-            return csvreader
+            return [data for data in csvreader]
     except FileNotFoundError:
         raise FileNotFoundError(f'File referring to "{path}" not found.')

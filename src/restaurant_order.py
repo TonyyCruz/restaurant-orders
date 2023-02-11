@@ -18,3 +18,13 @@ class RestaurantOrders(Restaurant):
                 if all_dishes[meal] > most_bought_meal[1]:
                     most_bought_meal = (meal, all_dishes[meal])
         return most_bought_meal
+
+    def meal_bought_by_client(self, client, meal):
+        client_data = self.client_history(client)
+        client_active_weeks = client_data.keys()
+        bought_times = 0
+
+        for week in client_active_weeks:
+            if meal in client_data[week]["orders"]:
+                bought_times += client_data[week]["orders"][meal]
+        return bought_times
