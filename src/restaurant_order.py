@@ -38,3 +38,8 @@ class RestaurantOrders(Restaurant):
             meals = client_data[week]["orders"].keys()
             bought_meals.update(meals)
         return bought_meals.symmetric_difference(self.menu)
+
+    def week_day_never_bought(self, client):
+        client_data = self.client_history(client)
+        bought_weeks = set(client_data.keys())
+        return bought_weeks.symmetric_difference(self.week_days_open)
