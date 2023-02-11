@@ -28,3 +28,13 @@ class RestaurantOrders(Restaurant):
             if meal in client_data[week]["orders"]:
                 bought_times += client_data[week]["orders"][meal]
         return bought_times
+
+    def meal_never_bought(self, client):
+        client_data = self.client_history(client)
+        client_active_weeks = client_data.keys()
+        bought_meals = set()
+
+        for week in client_active_weeks:
+            meals = client_data[week]["orders"].keys()
+            bought_meals.update(meals)
+        return bought_meals.symmetric_difference(self.menu)

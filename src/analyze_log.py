@@ -9,4 +9,4 @@ def analyze_log(path_to_file):
     for name, order, week in csv_data:
         restaurantOrders.new_order(name, order, week)
 
-    print(restaurantOrders)
+    print("====>>", restaurantOrders.meal_never_bought("joao"))
