@@ -1,31 +1,20 @@
-class RestaurantOrders:
-    def __init__(self):
-        # self.client_list = set()
-        self.clients_history = dict()
+from restaurant.restaurant import Restaurant
 
-    def is_client(self, client_name):
-        return client_name in self.clients_history
 
-    def add_client_order(self, client, order, week_day):
-        try:
-            self.clients_history[client][week_day]["visit"] += 1
-        except KeyError:
-            self.clients_history[client][week_day]["visit"] = 1
-        try:
-            self.clients_history[client][week_day][order] += 1
-        except KeyError:
-            self.clients_history[client][week_day][order] = 1
+class RestaurantOrders(Restaurant):
+    def most_requested_dish(self, client):
+        client_data = self.client_history(client)
+        client_active_weeks = client_data.keys()
+        all_dishes = dict()
+        most_bought_meal = tuple(("", 0))
 
-    def new_client(self, client, order, week_day):
-        self.clients_history[client] = client
-        self.clients_history[client][week_day]["visit"] = 1
-        self.clients_history[client][week_day][order] = 1
+        for week_day in client_active_weeks:
+            for meal, num in client_data[week_day]["orders"].items():
+                if meal not in all_dishes:
+                    all_dishes[meal] = num
+                else:
+                    all_dishes[meal] += num
 
-    def new_order(self, client, order, week_day):
-        if self.is_client(client):
-            self.add_client_order(client, order)
-        else:
-            self.new_client(client, order, week_day)
-
-        def __str__(self):
-            return self.clients_history
+                if all_dishes[meal] > most_bought_meal[1]:
+                    most_bought_meal = (meal, all_dishes[meal])
+        return most_bought_meal
