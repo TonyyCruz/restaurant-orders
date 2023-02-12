@@ -1,8 +1,8 @@
 from restaurant.restaurant import Restaurant
 
 
-class RestaurantOrders(Restaurant):
-    def most_requested_dish(self, client):
+class RestaurantAnalyze(Restaurant):
+    def most_requested_dish_by_client(self, client):
         client_data = self.client_history(client)
         client_active_weeks = client_data.keys()
         all_dishes = dict()
@@ -19,7 +19,7 @@ class RestaurantOrders(Restaurant):
                     most_bought_meal = (meal, all_dishes[meal])
         return most_bought_meal
 
-    def meal_bought_by_client(self, client, meal):
+    def amount_of_meal_bought(self, client, meal):
         client_data = self.client_history(client)
         client_active_weeks = client_data.keys()
         bought_times = 0
@@ -29,7 +29,7 @@ class RestaurantOrders(Restaurant):
                 bought_times += client_data[week]["orders"][meal]
         return bought_times
 
-    def meal_never_bought(self, client):
+    def meal_customer_never_bought(self, client):
         client_data = self.client_history(client)
         client_active_weeks = client_data.keys()
         bought_meals = set()
@@ -39,7 +39,7 @@ class RestaurantOrders(Restaurant):
             bought_meals.update(meals)
         return bought_meals.symmetric_difference(self.menu)
 
-    def week_day_never_bought(self, client):
+    def week_that_customer_not_bought(self, client):
         client_data = self.client_history(client)
         bought_weeks = set(client_data.keys())
         return bought_weeks.symmetric_difference(self.week_days_open)

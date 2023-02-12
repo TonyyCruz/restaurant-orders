@@ -11,11 +11,11 @@ class IRestaurant(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def add_client_order(self, client, order, week_day) -> None:
+    def _add_client_order(self, client, order, week_day) -> None:
         raise NotImplementedError
 
     @abstractmethod
-    def new_client(self, client, order, week_day) -> None:
+    def _new_client(self, client, order, week_day) -> None:
         raise NotImplementedError
 
     @abstractmethod
