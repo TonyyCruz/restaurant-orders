@@ -1,5 +1,8 @@
 from .utils.csv_reader import csv_reader
+from .utils.create_file import create_file
 from .restaurant_analyze import RestaurantAnalyze
+
+PATH_TO_SAVE_FILE = "data/mkt_campaign.txt"
 
 
 def analyze_log(path_to_file):
@@ -14,10 +17,7 @@ def analyze_log(path_to_file):
     meal_not_bought = restaurant.meal_customer_never_bought("joao")
     day_never_bought = restaurant.week_that_customer_not_bought("joao")
 
-    analyze_data = f"""
-        {meal}
-        {most_bought}
-        {meal_not_bought}
-        {day_never_bought}
-        """
-    print("====>>", analyze_data)
+    analyze_data = (
+        f"{meal}\n{most_bought}\n{meal_not_bought}\n{day_never_bought}"
+    )
+    create_file(PATH_TO_SAVE_FILE, analyze_data)
