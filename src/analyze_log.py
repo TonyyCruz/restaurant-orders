@@ -12,7 +12,7 @@ def analyze_log(path_to_file):
     for name, order, week in csv_data:
         restaurant.add_new_order(name, order, week)
 
-    meal, _quantity = restaurant.get_most_ordered_dish_per_customer("maria")
+    meal = restaurant.get_most_ordered_dish_per_customer("maria")
     most_bought = restaurant.amount_of_meal_bought("arnaldo", "hamburguer")
     meal_not_bought = restaurant.get_never_ordered_per_customer("joao")
     day_never_bought = restaurant.get_days_never_visited_per_customer("joao")

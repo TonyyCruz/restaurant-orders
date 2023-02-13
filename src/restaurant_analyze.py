@@ -6,7 +6,7 @@ class RestaurantAnalyze(Restaurant):
         client_data = self.client_history(client)
         client_active_weeks = client_data.keys()
         all_dishes = dict()
-        most_bought_meal = tuple(("", 0))
+        most_ordered_meal,  most_ordered_quantity = tuple(("", 0))
 
         for week_day in client_active_weeks:
             for meal, num in client_data[week_day]["orders"].items():
@@ -15,9 +15,10 @@ class RestaurantAnalyze(Restaurant):
                 else:
                     all_dishes[meal] += num
 
-                if all_dishes[meal] > most_bought_meal[1]:
-                    most_bought_meal = (meal, all_dishes[meal])
-        return most_bought_meal
+                if all_dishes[meal] > most_ordered_quantity:
+                    most_ordered_meal = meal
+                    most_ordered_quantity = all_dishes[meal]
+        return most_ordered_meal
 
     def amount_of_meal_bought(self, client, meal):
         client_data = self.client_history(client)
