@@ -16,7 +16,7 @@ class InventoryControl:
     }
 
     def __init__(self):
-        pass
+        self.inventory = self.MINIMUM_INVENTORY
 
     def add_new_order(self, customer, order, day):
         pass

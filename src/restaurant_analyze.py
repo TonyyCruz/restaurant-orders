@@ -38,9 +38,9 @@ class RestaurantAnalyze(Restaurant):
         for week in client_active_weeks:
             meals = client_data[week]["orders"].keys()
             bought_meals.update(meals)
-        return bought_meals.symmetric_difference(self.menu)
+        return bought_meals.symmetric_difference(self.inventory.keys())
 
     def get_days_never_visited_per_customer(self, client):
         client_data = self.client_history(client)
         bought_weeks = set(client_data.keys())
-        return bought_weeks.symmetric_difference(self.week_sales)
+        return bought_weeks.symmetric_difference(self.sales_per_week)

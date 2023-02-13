@@ -4,8 +4,8 @@ from .i_restaurant import IRestaurant
 class Restaurant(IRestaurant):
     def __init__(self):
         self.clients_data = dict()
-        self.menu = set()
-        self.week_sales = dict()
+        self.inventory = dict()
+        self.sales_per_week = dict()
 
     def is_client(self, client_name):
         return client_name in self.clients_data
@@ -36,10 +36,12 @@ class Restaurant(IRestaurant):
         else:
             self._new_client(client, order, week_day)
 
-        self.menu.add(order)
-        if week_day not in self.week_sales:
-            self.week_sales[week_day] = 0
-        self.week_sales[week_day] += 1
+        if order not in self.inventory:
+            self.inventory[order] = 0
+        if week_day not in self.sales_per_week:
+            self.sales_per_week[week_day] = 0
+        self.sales_per_week[week_day] += 1
+        self.inventory[order] -= 1
 
     def client_history(self, client):
         if client in self.clients_data:
