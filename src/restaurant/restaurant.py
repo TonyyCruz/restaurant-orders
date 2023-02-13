@@ -5,7 +5,7 @@ class Restaurant(IRestaurant):
     def __init__(self):
         self.clients_data = dict()
         self.menu = set()
-        self.week_days_open = set()
+        self.week_sales = dict()
 
     def is_client(self, client_name):
         return client_name in self.clients_data
@@ -30,14 +30,16 @@ class Restaurant(IRestaurant):
         self.clients_data[client][week_day]["orders"] = dict()
         self.clients_data[client][week_day]["orders"][order] = 1
 
-    def new_order(self, client, order, week_day):
+    def add_new_order(self, client, order, week_day):
         if self.is_client(client):
             self._add_client_order(client, order, week_day)
         else:
             self._new_client(client, order, week_day)
-        # essa logica foi feita esclusivamente para o requisito do projeto
+
         self.menu.add(order)
-        self.week_days_open.add(week_day)
+        if week_day not in self.week_sales:
+            self.week_sales[week_day] = 0
+        self.week_sales[week_day] += 1
 
     def client_history(self, client):
         if client in self.clients_data:

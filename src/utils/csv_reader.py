@@ -1,13 +1,12 @@
 import csv
-import sys
 
 
 def csv_reader(path):
     if not path.endswith(".csv"):
-        print("invalid file type", file=sys.stderr)
+        raise FileNotFoundError(f"Extensão inválida: '{path}'")
     try:
         with open(path, "r") as file:
             csvreader = csv.reader(file)
             return [data for data in csvreader]
     except FileNotFoundError:
-        raise FileNotFoundError(f'File referring to "{path}" not found.')
+        raise FileNotFoundError(f"Arquivo inexistente: '{path}'")

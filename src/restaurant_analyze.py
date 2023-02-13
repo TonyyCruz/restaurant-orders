@@ -2,7 +2,7 @@ from restaurant.restaurant import Restaurant
 
 
 class RestaurantAnalyze(Restaurant):
-    def most_requested_dish_by_client(self, client):
+    def get_most_ordered_dish_per_customer(self, client):
         client_data = self.client_history(client)
         client_active_weeks = client_data.keys()
         all_dishes = dict()
@@ -29,7 +29,7 @@ class RestaurantAnalyze(Restaurant):
                 bought_times += client_data[week]["orders"][meal]
         return bought_times
 
-    def meal_customer_never_bought(self, client):
+    def get_never_ordered_per_customer(self, client):
         client_data = self.client_history(client)
         client_active_weeks = client_data.keys()
         bought_meals = set()
@@ -39,7 +39,7 @@ class RestaurantAnalyze(Restaurant):
             bought_meals.update(meals)
         return bought_meals.symmetric_difference(self.menu)
 
-    def week_that_customer_not_bought(self, client):
+    def get_days_never_visited_per_customer(self, client):
         client_data = self.client_history(client)
         bought_weeks = set(client_data.keys())
-        return bought_weeks.symmetric_difference(self.week_days_open)
+        return bought_weeks.symmetric_difference(self.week_sales)
