@@ -21,6 +21,7 @@ class InventoryControl(RestaurantAnalyze):
     def __init__(self):
         super().__init__()
         self.inventory = dict()
+        self.menu = set()
         self.initialize()
 
     def initialize(self):
@@ -28,6 +29,7 @@ class InventoryControl(RestaurantAnalyze):
         sold_control = dict()
         for product in self.INGREDIENTS.keys():
             sold_control[product] = 0
+            self.menu.add(product)
         self.sold_products = sold_control
 
     def do_we_have_inventory_to_order(self, order):
@@ -58,9 +60,14 @@ class InventoryControl(RestaurantAnalyze):
 
     def get_quantities_to_buy(self):
         to_buy = dict()
-        print("inventatio ==-->>", self.inventory)
 
         for item, quantity in self.inventory.items():
-            print("for loop -->", item, quantity, self.MINIMUM_INVENTORY[item])
             to_buy[item] = self.MINIMUM_INVENTORY[item] - quantity
         return to_buy
+
+    def get_available_dishes(self):
+        available_dishes = set()
+        for item in self.menu:
+            if self.do_we_have_inventory_to_order(item):
+                available_dishes.add(item)
+        return available_dishes
