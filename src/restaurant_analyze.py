@@ -33,12 +33,13 @@ class RestaurantAnalyze(Restaurant):
     def get_never_ordered_per_customer(self, client):
         client_data = self.client_history(client)
         client_active_weeks = client_data.keys()
+        menu = set(self.sold_products.keys())
         bought_meals = set()
 
         for week in client_active_weeks:
             meals = client_data[week]["orders"].keys()
             bought_meals.update(meals)
-        return bought_meals.symmetric_difference(self.inventory.keys())
+        return bought_meals.symmetric_difference(menu)
 
     def get_days_never_visited_per_customer(self, client):
         client_data = self.client_history(client)
